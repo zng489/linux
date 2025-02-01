@@ -1,0 +1,72 @@
+# way to acess directory on windows system in linux
+get into the dir cd /root/airflow
+
+C:\Users\PC>wsl
+root@DESKTOP-QMQHLFF:/mnt/c/Users/PC# cd Desktop
+root@DESKTOP-QMQHLFF:/mnt/c/Users/PC/Desktop# cd Arquitetura
+root@DESKTOP-QMQHLFF:/mnt/c/Users/PC/Desktop/Arquitetura# mkdir airflow_windows
+root@DESKTOP-QMQHLFF:/mnt/c/Users/PC/Desktop/Arquitetura# cd airflow_windows
+root@DESKTOP-QMQHLFF:/mnt/c/Users/PC/Desktop/Arquitetura/airflow_windows# sudo apt-get update
+root@DESKTOP-QMQHLFF:/mnt/c/Users/PC/Desktop/Arquitetura/airflow_windows# python3 --version
+Python 3.10.12
+root@DESKTOP-QMQHLFF:/mnt/c/Users/PC/Desktop/Arquitetura/airflow_windows# sudo apt install python3.10-venv
+root@DESKTOP-QMQHLFF:/mnt/c/Users/PC/Desktop/Arquitetura/airflow_windows# python3 -m venv .airflow
+it will take pretty much 10 minutes
+root@DESKTOP-QMQHLFF:/mnt/c/Users/PC/Desktop/Arquitetura/airflow_windows# source .airflow/bin/activate
+https://airflow.apache.org/docs/apache-airflow/stable/start.html
+export AIRFLOW_HOME=~/airflow
+AIRFLOW_VERSION=2.10.4
+
+# Extract the version of Python you have installed. If you're currently using a Python version that is not supported by Airflow, you may want to set this manually.
+# See above for supported versions.
+PYTHON_VERSION="$(python -c 'import sys; print(f"{sys.version_info.major}.{sys.version_info.minor}")')"
+
+CONSTRAINT_URL="https://raw.githubusercontent.com/apache/airflow/constraints-${AIRFLOW_VERSION}/constraints-${PYTHON_VERSION}.txt"
+# For example this would install 2.10.4 with python 3.8: https://raw.githubusercontent.com/apache/airflow/constraints-2.10.4/constraints-3.8.txt
+
+pip install "apache-airflow==${AIRFLOW_VERSION}" --constraint "${CONSTRAINT_URL}"
+
+(.airflow) root@DESKTOP-QMQHLFF:/mnt/c/Users/PC/Desktop/Arquitetura/airflow_windows# export AIRFLOW_HOME=~/airflow
+(.airflow) root@DESKTOP-QMQHLFF:/mnt/c/Users/PC/Desktop/Arquitetura/airflow_windows# export AIRFLOW_HOME=$(pwd)
+(.airflow) root@DESKTOP-QMQHLFF:/mnt/c/Users/PC/Desktop/Arquitetura/airflow_windows# AIRFLOW_VERSION=2.10.4
+(.airflow) root@DESKTOP-QMQHLFF:/mnt/c/Users/PC/Desktop/Arquitetura/airflow_windows# PYTHON_VERSION="$(python -c 'import sys; print(f"{sys.version_info.major}.{sys.version_info.minor}")')"
+(.airflow) root@DESKTOP-QMQHLFF:/mnt/c/Users/PC/Desktop/Arquitetura/airflow_windows# CONSTRAINT_URL="https://raw.githubusercontent.com/apache/airflow/constraints-${AIRFLOW_VERSION}/constraints-${PYTHON_VERSION}.txt"
+(.airflow) root@DESKTOP-QMQHLFF:/mnt/c/Users/PC/Desktop/Arquitetura/airflow_windows# pip install "apache-airflow==${AIRFLOW_VERSION}" --constraint "${CONSTRAINT_URL}"
+Collecting apache-airflow==2.10.4
+
+(.airflow) root@DESKTOP-QMQHLFF:/mnt/c/Users/PC/Desktop/Arquitetura/airflow_windows# airflow standalone
+
+#######################
+standalone | Airflow is ready
+standalone | Login with username: admin  password: 4eB7uYyzRCV2XpVE
+
+https://www.youtube.com/watch?v=LwX9FFK9ojc&ab_channel=Andr%C3%A9Ricardo
+Sobre o diretório das DAGs do Airflow quando feito a instalação local, sem uso de docker, é preciso seguir alguns passos para identificar os arquivos... Vamos ver se consigo ajudar:
+
+Quando acessar o terminal linux(via WSL) procure a variável de ambiente AIRFLOW_HOME. 
+Para isto, execute o comando: env | grep AIRFLOW
+No meu caso foi o caminho: /root/airflow
+
+Acessando este diretório, temos o arquivo de configuração do Airflow: airflow.cfg
+Visualizando as primeiras linhas do arquivo, vamos procurar a configuração da variável dags_folder.
+Execute o comando: head airflow.cfg
+No meu caso obtive o resultado /root/airflow/dags
+
+Ótimo! Aqui encontramos no linux o diretório das DAGs.
+
+Para acessar este diretório pelo explorer do Windows, será necessário acessar como se fosse um compartilhamento de rede.
+Abra uma janela de arquivos (win+e) ou na barra de pesquisa do windows e digite: \\wsl$\
+
+Na janela que se abre tenho um diretório Ubuntu e dentro dele consigo navegar em todos os diretorios linux como se fossem diretórios no Windows.
+
+Aqui você pode chegar até o diretório de DAGs: \\wsl.localhost\Ubuntu\root\airflow\dags\
+
+Espero que tenha ajudado.
+Se ainda estiver com mais dúvidas, comente aqui!
+
+Um forte abraço,
+
+André Ricardo
+
+o check the processes running in your Windows Subsystem for Linux (WSL), you can use several commands. Here's a step-by-step guide on how to list and manage processes in WSL:
+
