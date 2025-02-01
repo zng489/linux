@@ -1,0 +1,171 @@
+https://www.youtube.com/watch?v=fQzgt0__ZJ4&ab_channel=RenanSilva
+https://www.youtube.com/@andre_ricardo
+https://www.youtube.com/watch?v=LwX9FFK9ojc&ab_channel=Andr%C3%A9Ricardo
+https://medium.com/@salssouza/how-to-install-pyspark-in-wsl-3c4ac0e7f672
+https://medium.com/@aitmsi/single-node-spark-pyspark-cluster-on-windows-subsystem-for-linux-wsl2-22860888a98d
+https://www.youtube.com/watch?v=dq183fOB1Xg&ab_channel=KeithLyons
+https://www.youtube.com/watch?v=Tk-B6Nm8qOY&ab_channel=Jos%C3%A9HenriquePadovani
+https://www.youtube.com/watch?v=FMeHc8JgYfA&ab_channel=BlismosAcademy
+https://www.youtube.com/watch?v=xl7PgSkxPbU&ab_channel=thegreatbacana
+https://www.youtube.com/watch?v=pb-hqa_-7mk&ab_channel=SureshkumarGajendran
+https://www.youtube.com/watch?v=Aq5re8T1ANA&ab_channel=Webillusion
+
+root@DESKTOP-QMQHLFF:/mnt/c/Users/PC# cd desktop
+root@DESKTOP-QMQHLFF:/mnt/c/Users/PC/desktop# mkdir pyspark_linux
+root@DESKTOP-QMQHLFF:/mnt/c/Users/PC/desktop# cd pyspark_linux
+
+# Com python já instalado se quiser criar uma outra versão dele usa-se => python3.8 -m venv myenv # Seria bom instalador o miniconda antes
+
+root@DESKTOP-QMQHLFF:/mnt/c/Users/PC/desktop/pyspark_linux# python3 --version # Seria bom instalador o miniconda antes
+# Python 3.10.12
+
+root@DESKTOP-QMQHLFF:/mnt/c/Users/PC/desktop/pyspark_linux# python3 -m venv .pyspark # Criou-se um env ambiente com nome pyspark e escondido "."
+root@DESKTOP-QMQHLFF:/mnt/c/Users/PC/desktop/pyspark_linux# source .pyspark/bin/activate  ou desativando deactivate
+(.pyspark) root@DESKTOP-QMQHLFF:/mnt/c/Users/PC/desktop/pyspark_linux#
+
+(.pyspark) root@DESKTOP-QMQHLFF:/mnt/c/Users/PC/desktop/pyspark_linux# sudo apt update or sudo apt -y update
+
+# Instalando Java e Pyspark
+# JAVA
+sudo apt update
+sudo apt install openjdk-11-jdk
+
+# SPARK
+https://www.apache.org/dyn/closer.lua/spark/spark-3.5.4/spark-3.5.4-bin-hadoop3.tgz
+sudo !wget https://dlcdn.apache.org/spark/spark-3.5.4/spark-3.5.4-bin-hadoop3.tgz
+sudo tar xvf spark-3.5.4-bin-hadoop3.tgz # Extraindo
+sudo mv spark-3.5.4-bin-hadoop3 /opt/spark # Movendo tudo para essa pasta \\wsl.localhost\Ubuntu\opt\spark
+
+
+export SPARK_HOME=/opt/spark
+export PATH=$PATH:$SPARK_HOME/bin
+export PYTHONPATH=$SPARK_HOME/python:$PYTHONPATH # Seria bom instalador o miniconda antes
+
+
+echo "export SPARK_HOME=/opt/spark" >> ~/.profile
+echo "export PATH=$PATH:$SPARK_HOME/bin" >> ~/.profile
+echo "export PYTHONPATH=$SPARK_HOME/python:$PYTHONPATH" >> ~/.profile
+
+source ~/.profile
+nano ~/.profile
+
+# Se precisar
+nano ~/.bashrc
+source ~/.bashrc
+gedit .\bashrc
+
+sudo /opt/spark/sbin/start-master.sh --host 127.0.0.1 --webui-port 8080 # sudo /opt/spark/sbin/start-master.sh 8080
+sudo /opt/spark/sbin/start-worker.sh spark://localhost:7077
+
+sudo /opt/spark/sbin/stop-all.sh
+
+pip install py4j
+##############################################
+
+# LEIA PARA ENTENDER A VARIAVEL DE AMBIENTE NO LINUX, SE VC ESQUECER
+
+export SPARK_HOME=/opt/spark
+export PATH=$PATH:$SPARK_HOME/bin
+
+# export PATH=$PATH:/opt/spark/bin
+# Esta linha define a variável de ambiente SPARK_HOME, 
+# que informa ao sistema onde o Spark está instalado. 
+# No caso, o Spark está instalado no diretório /opt/spark.
+# O Spark usa essa variável para localizar seus arquivos e configurações importantes.
+
+### export PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/usr/lib/wsl/lib:/mnt/c/Users/PC/miniconda3/condabin:/mnt/c/WINDOWS/system32:/mnt/c/WINDOWS:/mnt/c/WINDOWS/System32/Wbem:/mnt/c/WINDOWS/System32/WindowsPowerShell/v1.0/:/mnt/c/WINDOWS/System32/OpenSSH/:/mnt/c/Program Files (x86)/PuTTY/:/mnt/c/Program Files (x86)/NVIDIA Corporation/PhysX/Common:/mnt/c/Program Files/Git/cmd:/mnt/c/Program Files/nodejs/:/Docker/host/bin:/mnt/c/Program Files/dotnet/:/mnt/c/Program Files (x86)/Terraform:/mnt/c/Users/PC/AppData/Local/Microsoft/WindowsApps:/mnt/c/Users/PC/AppData/Local/Programs/Microsoft VS Code/bin:/mnt/c/Users/PC/AppData/Roaming/npm:/mnt/c/Users/PC/AppData/Local/Programs/MiKTeX/miktex/bin/x64/:/mnt/c/Users/PC/AppData/Local/Programs/Ollama:/snap/bin:/opt/spark/bin:/opt/spark/sbin
+# exemplo export PATH=$PATH:$SPARK_HOME/bin
+# O PATH é uma variável de ambiente usada pelo sistema para localizar programas executáveis. 
+# Ao adicionar $SPARK_HOME/bin ao PATH, 
+# você permite que o sistema reconheça comandos do Spark (como spark-submit e pyspark) 
+# a partir de qualquer terminal
+
+
+### export PYSPARK_PYTHON=/root/miniconda3/envs/ambiente/bin/python3
+# export PYSPARK_PYTHON=/usr/bin/python3
+# O PySpark precisa saber qual versão do Python usar, e, 
+#nesse caso, você está especificando que o Python 3 deve ser utilizado.
+
+
+
+export PYTHONPATH=$SPARK_HOME/python:$PYTHONPATH
+
+# 1. export:
+# O comando export é usado no Linux/Unix para definir variáveis de ambiente que ficam disponíveis para processos filhos 
+# (como scripts e programas executados em terminais).
+
+# 2. PYTHONPATH:
+# O PYTHONPATH é uma variável de ambiente usada pelo Python para saber onde procurar os módulos (pacotes) importados.
+# Quando você importa uma biblioteca no Python, o Python verifica o diretório de onde ela deve vir, 
+# de acordo com os diretórios listados em PYTHONPATH (junto com os diretórios padrão do Python).
+
+# 3. $SPARK_HOME/python:
+# $SPARK_HOME é a variável de ambiente que armazena o caminho de instalação do Spark. 
+# Então, $SPARK_HOME/python é o diretório que contém as bibliotecas Python do Spark.
+# Ao usar $SPARK_HOME/python, você está referenciando o local onde estão as bibliotecas Python do Spark (como pyspark).
+
+# 4. : $PYTHONPATH:
+# O : no comando é um separador usado para concatenar diretórios no PYTHONPATH.
+# No Unix/Linux, quando você deseja adicionar múltiplos diretórios à variável de ambiente PYTHONPATH, você os separa com :.
+# O $PYTHONPATH no final garante que você não substitua o conteúdo anterior de PYTHONPATH, 
+# mas sim que adicione o diretório $SPARK_HOME/python à lista de diretórios já existentes.
+
+# This is for Jupyter notebook with Spark
+# export PYSPARK_DRIVER_PYTHON=jupyter
+# export PYSPARK_DRIVER_PYTHON_OPTS='notebook'
+# export PYSPARK_DRIVER_PYTHON=jupyter
+# export PYSPARK_DRIVER_PYTHON_OPTS='notebook'
+
+
+#PYSPARK_DRIVER_PYTHON=ipython ./bin/pyspark
+#PYSPARK_DRIVER_PYTHON=jupyter PYSPARK_DRIVER_PYTHON_OPTS=notebook ./bin/pyspark
+
+
+#export SPARK_HOME=/opt/spark
+#export PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/usr/lib/wsl/lib:/mnt/c/Users/PC/miniconda3/condabin:/mnt/c/WINDOWS/system32:/mnt/c/WINDOWS:/mnt/c/WINDOWS/System32/Wbem:/mnt/c/WINDOWS/System32/WindowsPowerShell/v1.0/:/mnt/c/WINDOWS/System32/OpenSSH/:/mnt/c/Program Files (x86)/PuTTY/:/mnt/c/Program Files (x86)/NVIDIA Corporation/PhysX/Common:/mnt/c/Program Files/Git/cmd:/mnt/c/Program Files/nodejs/:/Docker/host/bin:/mnt/c/Program Files/dotnet/:/mnt/c/Program Files (x86)/Terraform:/mnt/c/Users/PC/AppData/Local/Microsoft/WindowsApps:/mnt/c/Users/PC/AppData/Local/Programs/Microsoft VS Code/bin:/mnt/c/Users/PC/AppData/Roaming/npm:/mnt/c/Users/PC/AppData/Local/Programs/MiKTeX/miktex/bin/x64/:/mnt/c/Users/PC/AppData/Local/Programs/Ollama:/snap/bin:/opt/spark/bin:/opt/spark/sbin
+#export PYSPARK_PYTHON=/root/miniconda3/envs/ambiente/bin/python3
+#export PYTHONPATH=$SPARK_HOME/python:$PYTHONPATH
+
+#export PYSPARK_DRIVER_PYTHON=jupyter
+#export PYSPARK_DRIVER_PYTHON_OPTS="notebooks"
+
+##############################################################################
+
+
+sudo lsof -i :8080 # Procurar a porta do processo 8080
+sudo kill -9 16185 # Matar o processo 16185
+
+ps aux
+kill 12345
+
+kill -9 -1
+Press Windows + R to open the Run dialog.
+Type services.msc and press Enter to open the Services window.
+Scroll down and find LxssManager.
+Right-click on LxssManager and select Restart.
+After restarting, try running wsl again
+
+
+
+
+
+# Jeito estranho de ativar o pyspark
+cd /opt/spark # Entrando na pasta
+./bin/pyspark # Entrando no bin para ativar o pyspark
+/opt/spark/bin/pyspark # Might be direto aqui
+
+
+onde estou
+pwd
+
+cd home
+ls
+cd renan
+cd ..
+cd ~
+
+
+
+
+
+
