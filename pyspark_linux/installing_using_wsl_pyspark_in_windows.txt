@@ -164,8 +164,18 @@ cd renan
 cd ..
 cd ~
 
+###########
+# Iceberg #
+###########
+spark-shell --packages org.apache.iceberg:iceberg-spark-runtime-3.1_2.12:0.13.1
 
+from pyspark.sql import SparkSession
 
+# Inicializar o Spark com Iceberg
+spark = SparkSession.builder \
+    .appName("IcebergExample") \
+    .config("spark.jars.packages", "org.apache.iceberg:iceberg-spark-runtime-3.1_2.12:0.13.1") \
+    .getOrCreate()
 
 
 
