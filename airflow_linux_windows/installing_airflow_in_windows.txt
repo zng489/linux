@@ -1,6 +1,11 @@
 # way to acess directory on windows system in linux
 get into the dir cd /root/airflow
 
+
+standalone | Airflow is ready
+standalone | Login with username: admin  password: DTZx4HEtFkmnU8md
+standalone | Airflow Standalone is for development purposes only. Do not use this in production!
+
 C:\Users\PC>wsl
 root@DESKTOP-QMQHLFF:/mnt/c/Users/PC# cd Desktop
 root@DESKTOP-QMQHLFF:/mnt/c/Users/PC/Desktop# cd Arquitetura
