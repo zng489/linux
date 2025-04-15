@@ -1,3 +1,21 @@
+# Installing Airflow
+
+If necessary
+# Extract the version of Python you have installed. If you're currently using a Python version that is not supported by Airflow, you may want to set this manually.
+# See above for supported versions.
+PYTHON_VERSION="$(python -c 'import sys; print(f"{sys.version_info.major}.{sys.version_info.minor}")')"
+
+Enter in your env folder
+(.airflow) root@DESKTOP-QMQHLFF:/mnt/c/Users/PC/Desktop/Arquitetura/airflow_windows# export AIRFLOW_HOME=~/airflow
+(.airflow) root@DESKTOP-QMQHLFF:/mnt/c/Users/PC/Desktop/Arquitetura/airflow_windows# export AIRFLOW_HOME=$(pwd)
+(.airflow) root@DESKTOP-QMQHLFF:/mnt/c/Users/PC/Desktop/Arquitetura/airflow_windows# AIRFLOW_VERSION=2.10.4
+(.airflow) root@DESKTOP-QMQHLFF:/mnt/c/Users/PC/Desktop/Arquitetura/airflow_windows# PYTHON_VERSION="$(python -c 'import sys; print(f"{sys.version_info.major}.{sys.version_info.minor}")')"
+(.airflow) root@DESKTOP-QMQHLFF:/mnt/c/Users/PC/Desktop/Arquitetura/airflow_windows# CONSTRAINT_URL="https://raw.githubusercontent.com/apache/airflow/constraints-${AIRFLOW_VERSION}/constraints-${PYTHON_VERSION}.txt"
+(.airflow) root@DESKTOP-QMQHLFF:/mnt/c/Users/PC/Desktop/Arquitetura/airflow_windows# pip install "apache-airflow==${AIRFLOW_VERSION}" --constraint "${CONSTRAINT_URL}"
+Collecting apache-airflow==2.10.4
+(.airflow) root@DESKTOP-QMQHLFF:/mnt/c/Users/PC/Desktop/Arquitetura/airflow_windows# airflow standalone
+
+
 # way to acess directory on windows system in linux
 get into the dir cd /root/airflow
 
