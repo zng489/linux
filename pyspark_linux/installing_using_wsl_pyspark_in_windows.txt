@@ -62,6 +62,159 @@ print(pyspark.__version__)
 ---
 
 
+
+Perfeito! 👍 Para ver o Spark UI enquanto o Spark está rodando, você precisa garantir algumas coisas:
+
+1️⃣ Rodar Spark Master e Worker
+
+No Linux (servidor):
+
+# inicia o Master
+sudo /opt/spark/sbin/start-master.sh --host 0.0.0.0 --webui-port 8080
+
+# inicia o Worker apontando para o Master
+sudo /opt/spark/sbin/start-worker.sh spark://<IP_DO_SERVIDOR>:7077
+
+
+<IP_DO_SERVIDOR> → IP real da máquina Linux (ex: 192.168.0.145)
+
+Web UI do Master: http://<IP_DO_SERVIDOR>:8080
+
+Web UI do Worker: http://<IP_DO_SERVIDOR>:8081
+
+2️⃣ Rodar PySpark com SparkUI ativo
+
+Se você rodar PySpark no mesmo Linux:
+
+pyspark
+
+
+Enquanto o terminal estiver aberto, o driver Spark cria a porta 4040 para o Spark UI.
+
+Você pode verificar a porta real (caso 4040 esteja ocupada) com:
+
+sudo lsof -i :4040
+sudo lsof -i :4041
+
+
+Acesse no navegador:
+
+http://<IP_DO_SERVIDOR>:4040
+
+
+⚠️ Importante: assim que você fecha o terminal ou encerra o PySpark, o SparkUI do driver some.
+
+3️⃣ Se você estiver rodando PySpark do Windows conectado ao Linux Master
+
+No Windows:
+
+from pyspark.sql import SparkSession
+
+spark = SparkSession.builder \
+    .appName("RAIS") \
+    .master("spark://<IP_DO_SERVIDOR>:7077") \
+    .getOrCreate()
+
+
+O driver vai rodar no Windows, então o Spark UI do driver fica na máquina Windows (porta 4040 do Windows).
+
+Os workers continuam no Linux.
+
+4️⃣ Dicas extras
+
+Para ver SparkUI sempre disponível, mesmo após encerrar jobs, use History Server:
+
+/opt/spark/sbin/start-history-server.sh
+
+
+Porta padrão: 18080 → http://<IP_DO_SERVIDOR>:18080
+
+Se quiser, posso te montar um guia completo passo a passo para acessar SparkUI do Linux pelo Windows enquanto os jobs rodam, incluindo Master, Worker, driver e History Server.
+
+Quer que eu faça isso?
+
+Você disse:
+(worker) yuan@yuan:~/datalake$ sudo lsof -i :4040
+(worker) yuan@yuan:~/datalake$ sudo /opt/spark/sbin/start-master.sh --host 0.0.0.0 --webui-port 8080
+starting org.apache.spark.deploy.master.Master, logging to /opt/spark/logs/spark-root-org.apache.spark.deploy.master.Master-1-yuan.out
+(worker) yuan@yuan:~/datalake$ sudo /opt/spark/sbin/start-worker.sh spark://192.168.0.145:7077
+starting org.apache.spark.deploy.worker.Worker, logging to /opt/spark/logs/spark-root-org.apache.spark.deploy.worker.Worker-1-yuan.out
+(worker) yuan@yuan:~/datalake$ sudo lsof -i :4040
+sudo lsof -i :4041
+COMMAND   PID USER   FD   TYPE DEVICE SIZE/OFF NODE NAME
+java    15183 yuan  286u  IPv6  63013      0t0  TCP *:4041 (LISTEN)
+O ChatGPT disse:
+
+Perfeito! ✅
+
+Isso confirma que seu Spark Driver está rodando e a Spark UI está disponível na porta 4041.
+
+Interpretação:
+COMMAND   PID USER   FD   TYPE DEVICE SIZE/OFF NODE NAME
+java    15183 yuan  286u  IPv6  63013      0t0  TCP *:4041 (LISTEN)
+
+
+PROCESSO: java → Spark Driver
+
+PID: 15183 → ID do processo (pode usar para parar com kill)
+
+PORTA: 4041 → Spark UI do driver
+
+STATUS: LISTEN → ouvindo conexões
+
+IPv6: usando IPv6 (* = todas as interfaces)
+
+A porta 4040 estava ocupada por outro driver, então o Spark tentou 4041 automaticamente.
+
+Próximos passos:
+
+Acessar Spark UI pelo navegador:
+
+No mesmo Linux:
+
+http://localhost:4041
+
+
+Do Windows na mesma rede:
+
+http://192.168.0.145:4041
+
+
+Certifique-se que o firewall do Linux permite conexões TCP na porta 4041.
+
+Acompanhar jobs:
+
+No Spark UI, você verá: DAGs, jobs ativos, stages, tarefas, e detalhes de execução.
+
+Master e Worker UI:
+
+Master: http://192.168.0.145:8080
+
+Worker: http://192.168.0.145:8081
+
+Se quiser, posso te montar uma visão completa de todas as portas do Spark (Master, Worker, Driver e History Server) e como acessá-las do Windows, para não ter confusão de portas.
+
+Quer que eu faça isso?
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 https://www.youtube.com/watch?v=fQzgt0__ZJ4&ab_channel=RenanSilva
 https://www.youtube.com/@andre_ricardo
 https://www.youtube.com/watch?v=LwX9FFK9ojc&ab_channel=Andr%C3%A9Ricardo
@@ -240,6 +393,7 @@ spark = SparkSession.builder \
     .appName("IcebergExample") \
     .config("spark.jars.packages", "org.apache.iceberg:iceberg-spark-runtime-3.1_2.12:0.13.1") \
     .getOrCreate()
+
 
 
 
