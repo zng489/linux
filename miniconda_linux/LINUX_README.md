@@ -21,3 +21,15 @@ apps/
 └── python/
     └── miniconda3/
 ```
+
+##### wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh -O ~/miniconda3/miniconda.sh
+```
+O que acontece aqui 👇
+
+wget → baixa arquivos da internet
+
+URL → instalador oficial do Miniconda 3 (Linux 64-bit)
+
+-O ~/miniconda3/miniconda.sh
+→ salva o arquivo com o nome miniconda.sh dentro da pasta ~/miniconda3
+```
