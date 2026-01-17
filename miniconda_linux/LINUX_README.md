@@ -36,7 +36,7 @@ URL → instalador oficial do Miniconda 3 (Linux 64-bit)
 ```
 
 
-### > bash ~/miniconda3/miniconda.sh -b -u -p ~/miniconda3
+### > bash ~/miniconda3/miniconda.sh -b -u -p ~/miniconda3 (Instalando)
 ```
 Esse comando faz uma instalação automática (silent) do Miniconda — ótima escolha 👍
 
@@ -55,18 +55,18 @@ O que cada flag significa 👇
 ```
 
 
+### > rm ~/miniconda3/miniconda.sh (Removendo)
+```
+Removendo o arquivo
+```
 
 
-
-
-
-
-rm ~/miniconda3/miniconda.sh # Não sei por que usar esse commando, não usei
-
+### > rm ~/miniconda3/miniconda.sh (Ativando o conda)
+```
 source ~/miniconda3/bin/activate # Ativando o conda
 conda -h
 
-conda search python
+> **Instalando python** conda search python
 
 conda create -n ambiente python=3.10
 conda create -n ambiente python=3.8
@@ -74,8 +74,13 @@ conda activate ambiente # Ativando o env ambiente
 conda deactivate
 conda env remove --name <env_name>
 
+conda create -n snow python=3.10
+
 # Instalar dentro do env ambiente 
 pip install jupyter
+
+
+**rm ~/miniconda3/miniconda.sh**
 
 
 # python -m ipykernel install --user --name ambiente --display-name "my_jupyter"
@@ -92,4 +97,4 @@ This extension is enabled in the Remote Extension Host because it prefers to run
 Visual Code
 => You will need to configure the installation of the plugin notebook, and after that, change your environment to the correct one.
 
-
+```
