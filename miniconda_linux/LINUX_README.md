@@ -1,9 +1,9 @@
 ## Commands to install miniconda
-> ~ (this is commando to see it the directory that you are)
-> ls -a 👀 Mostrar arquivos e pastas (inclusive ocultos)
-
-> mkdir -p ~/miniconda3
 ```
+→ ~ (this is commando to see it the directory that you are)
+→ ls -a 👀 Mostrar arquivos e pastas (inclusive ocultos)
+→ mkdir -p ~/miniconda3
+
 Esse comando:
 mkdir -p ~/miniconda3
 O que ele faz 👇
@@ -25,11 +25,11 @@ apps/
 
 ### > wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh -O ~/miniconda3/miniconda.sh
 ```
-O que acontece aqui 👇
+→ O que acontece aqui 👇
 
-wget → baixa arquivos da internet
+→ wget → baixa arquivos da internet
 
-URL → instalador oficial do Miniconda 3 (Linux 64-bit)
+→ URL → instalador oficial do Miniconda 3 (Linux 64-bit)
 
 -O ~/miniconda3/miniconda.sh
 → salva o arquivo com o nome miniconda.sh dentro da pasta ~/miniconda3
@@ -38,11 +38,11 @@ URL → instalador oficial do Miniconda 3 (Linux 64-bit)
 
 ### > bash ~/miniconda3/miniconda.sh -b -u -p ~/miniconda3 (Instalando)
 ```
-Esse comando faz uma instalação automática (silent) do Miniconda — ótima escolha 👍
+→ Esse comando faz uma instalação automática (silent) do Miniconda — ótima escolha 👍
 
-bash ~/miniconda3/miniconda.sh -b -u -p ~/miniconda3
+→ bash ~/miniconda3/miniconda.sh -b -u -p ~/miniconda3
 
-O que cada flag significa 👇
+→ O que cada flag significa 👇
 
 -b (batch)
 👉 instala sem perguntas (modo não interativo)
@@ -57,22 +57,28 @@ O que cada flag significa 👇
 
 ### > rm ~/miniconda3/miniconda.sh (Removendo)
 ```
-Removendo o arquivo
+→ Removendo o arquivo
 ```
 
 
 ### > rm ~/miniconda3/miniconda.sh (Ativando o conda)
 ```
-source ~/miniconda3/bin/activate # Ativando o conda
-conda -h
+→ Ativando o conda python - source ~/miniconda3/bin/activate
+→ conda -h
+→ conda search python → Busca versões disponíveis do Python no conda.
 
-> **Instalando python** conda search python
+→ conda create -n ambiente python=3.10
+→ conda create -n ambiente python=3.8
 
-conda create -n ambiente python=3.10
-conda create -n ambiente python=3.8
-conda activate ambiente # Ativando o env ambiente
-conda deactivate
-conda env remove --name <env_name>
+
+→ conda activate ambiente # Ativando o env ambiente
+→ conda deactivate
+→ conda env remove --name <env_name>
+
+
+
+
+
 
 conda create -n snow python=3.10
 
