@@ -56,3 +56,40 @@ O que cada flag significa 👇
 
 
 
+
+
+
+
+
+rm ~/miniconda3/miniconda.sh # Não sei por que usar esse commando, não usei
+
+source ~/miniconda3/bin/activate # Ativando o conda
+conda -h
+
+conda search python
+
+conda create -n ambiente python=3.10
+conda create -n ambiente python=3.8
+conda activate ambiente # Ativando o env ambiente
+conda deactivate
+conda env remove --name <env_name>
+
+# Instalar dentro do env ambiente 
+pip install jupyter
+
+
+# python -m ipykernel install --user --name ambiente --display-name "my_jupyter"
+python -m ipykernel install --user --name ambiente
+
+Installed kernelspec ambiente in /root/.local/share/jupyter/kernels/ambiente
+jupyter notebook --allow-root
+
+
+Jupyter notebook support, interactive programming and computing that supports Intellisense, debugging and more.
+This extension is enabled in the Remote Extension Host because it prefers to run there. Learn More
+
+
+Visual Code
+=> You will need to configure the installation of the plugin notebook, and after that, change your environment to the correct one.
+
+
